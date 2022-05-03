@@ -1,0 +1,35 @@
+import { TableLine, TableColumn, Category, Value, Button } from './styles'
+import { Item } from '../../types/Item'
+import { formatDate } from '../../helpers/dateFilter'
+import { categories } from '../../data/categories'
+
+type Props = {
+    item: Item,
+    onDelete: (intem: Item) => void
+}
+
+export const TableItem = ( { item, onDelete}: Props) => {
+
+    const handleDeleteItem = () => {
+        onDelete(item)
+    }
+    return (
+        <TableLine>
+            <TableColumn>{formatDate(item.date)}</TableColumn>
+            <TableColumn>
+                <Category color={categories[item.category].color}>
+                    {categories[item.category].title}
+                </Category>
+            </TableColumn>
+            <TableColumn>{item.title}</TableColumn>
+            <TableColumn>
+                <Value color={categories[item.category].expense ? 'red' : 'green'}>
+                    R$ {item.value}
+                </Value>
+            </TableColumn>
+            <TableColumn>
+                <Button onClick={handleDeleteItem}>Apagar</Button>
+            </TableColumn>
+        </TableLine>
+    )
+}
